@@ -19,7 +19,7 @@ window.onload = function () {
                     $(".listDonHang").html(data);
                 },
                 error: function(e) {
-                    console.log(e.responseText);
+                    console.log(22, e.responseText);
                 }
             })
 
@@ -31,7 +31,7 @@ window.onload = function () {
         }
 
     }, (e)=> {
-        console.log(e.responseText);
+        console.log(34, e.responseText);
     })
 }
 
@@ -46,7 +46,7 @@ function xemChiTiet(mahd) {
             $("#chitietdonhang").html(data);
         },
         error: function(e) {
-            console.log(e.responseText);
+            console.log(49, e.responseText);
         }
     });
 }

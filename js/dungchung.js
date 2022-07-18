@@ -417,6 +417,7 @@ function setupEventTaiKhoan() {
 
 // ==================== Những hàm khác ===================== 
 function numToString(num, char) {
+    console.log(num)
     return num.toLocaleString().split(',').join(char || '.');
 }
 
