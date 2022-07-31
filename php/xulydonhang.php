@@ -1,12 +1,17 @@
 <?php
-    require_once('../BackEnd/ConnectionDB/DB_classes.php');
+	session_start();
+	require ("../BackEnd/ConnectionDB/DB_driver.php");
 
+	$db = new DB_driver();
+	$db->connect();
     if(!isset($_POST['request']) && !isset($_GET['request'])) die(null);
 
     switch ($_POST['request']) {
     	case 'getall':
-				$donhang = (new HoaDonBUS())->select_all();
-                $ctdonhang = (new ChiTietHoaDonBUS())->select_all();
+				$sql ="SELECT hd.*, sp.TenSP FROM `hoadon` AS hd
+				LEFT JOIN chitiethoadon AS cthd ON cthd.MaHD = hd.MaHD
+				LEFT JOIN sanpham AS sp ON sp.MaSP = cthd.MaSP";
+				$donhang = $db->get_list($sql);
 		    	die (json_encode($donhang));
     		break;
 
