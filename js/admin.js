@@ -1,7 +1,7 @@
 var TONGTIEN = 0;
 
 window.onload = function() {
-
+    
     document.getElementById("btnDangXuat").onclick = function() {
         checkDangXuat(()=>{
             window.location.href = "login.php"
@@ -13,7 +13,7 @@ window.onload = function() {
             if(user.MaQuyen != 1) {
                 addEventChangeTab();
                 addThongKe();
-                openTab('Home');
+                refreshTableSanPham();
             }
         } else {
             document.body.innerHTML = `<h1 style="color:red; with:100%; text-align:center; margin: 50px;"> Truy cập bị từ chối.. </h1>`;
@@ -229,16 +229,16 @@ function openTab(nameTab) {
         case 'Home':
             document.getElementsByClassName('home')[0].style.display = 'block';
             break;
-        case 'Sản Phẩm':
+        case 'sanpham':
             document.getElementsByClassName('sanpham')[0].style.display = 'block';
             break;
-        case 'Đơn Hàng':
+        case 'donhang':
             document.getElementsByClassName('donhang')[0].style.display = 'block';
             break;
-        case 'Khách Hàng':
+        case 'khachhang':
             document.getElementsByClassName('khachhang')[0].style.display = 'block';
             break;
-        case 'Thống Kê':
+        case 'thongke':
             document.getElementsByClassName('thongke')[0].style.display = 'block';
             break;
     }
@@ -248,6 +248,7 @@ function openTab(nameTab) {
 // Vẽ bảng danh sách sản phẩm
 function addTableProducts(list_products) {
     var tc = document.getElementsByClassName('sanpham')[0].getElementsByClassName('table-content')[0];
+    openTab('sanpham')
     var s = `<table class="table-outline hideImg">`;
 
     for (var i = 0; i < list_products.length; i++) {
@@ -739,6 +740,7 @@ function refreshTableDonHang() {
 }
 function addTableDonHang(data) {
     var tc = document.getElementsByClassName('donhang')[0].getElementsByClassName('table-content')[0];
+    openTab('donhang')
     var s = `<table class="table-outline hideImg">`;
 
     TONGTIEN = 0;
@@ -748,10 +750,10 @@ function addTableDonHang(data) {
             <td style="width: 5%">` + (i + 1) + `</td>
             <td style="width: 13%">` + d.MaHD + `</td>
             <td style="width: 7%">` + d.MaND + `</td>
-            <td style="width: 20%">` + /*d.sp*/ + `</td>
+            <td style="width: 20%">` + d.TenSP + `</td>
             <td style="width: 15%">` + d.TongTien + `</td>
             <td style="width: 10%">` + d.NgayLap + `</td>
-            <td style="width: 10%">` + d.TinhTrang + `</td>
+            <td style="width: 10%">` + d.TrangThai + `</td>
             <td style="width: 10%">
                 <div class="tooltip">
                     <i class="fa fa-check" onclick="duyet('` + d.MaHD + `', true)"></i>
@@ -764,7 +766,7 @@ function addTableDonHang(data) {
                 
             </td>
         </tr>`;
-        TONGTIEN += stringToNum(d.tongtien);
+        TONGTIEN += stringToNum(d.TongTien);
     }
 
     s += `</table>`;
@@ -952,9 +954,9 @@ function thayDoiTrangThaiND(inp, mand) {
             trangThai: trangthai
         },
         success: function(data, status, xhr) {
-            //list_products = data; // biến toàn cục lưu trữ mảng sản phẩm hiện có
-            // refreshTableKhachHang();
-            //console.log(data);
+            list_products = data; // biến toàn cục lưu trữ mảng sản phẩm hiện có
+            refreshTableKhachHang();
+            console.log(data);
         },
         error: function(e) {
             // Swal.fire({
@@ -970,6 +972,7 @@ function thayDoiTrangThaiND(inp, mand) {
 
 function addTableKhachHang(data) {
     var tc = document.getElementsByClassName('khachhang')[0].getElementsByClassName('table-content')[0];
+    openTab('khachhang')
     var s = `<table class="table-outline hideImg">`;
 
 
